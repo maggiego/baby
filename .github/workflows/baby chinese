@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>帛辰學認字</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .word {
+            color: red; /* 將字體顏色設置為紅色 */
+        }
+    </style>
+</head>
+<body>
+    <h1>我是第七課</h1>
+    <div class="word" id="word"></div>
+    <button onclick="generateWord()">下一個</button>
+
+    <script>
+        const words = ["男", "孩", "靜", "晨", "傳", "雞", "吵", "雜", "女", "窩", 
+                       "啄", "母", "求", "助", "離", "些", "凡", "迪"];
+        let shuffledWords = shuffleArray(words.slice()); // 初始化隨機排列的單詞列表
+        let currentIndex = 0;
+
+        function generateWord() {
+            if (currentIndex >= shuffledWords.length) {
+                shuffledWords = shuffleArray(words.slice()); // 重新隨機排列單詞列表
+                currentIndex = 0;
+            }
+            const randomWord = shuffledWords[currentIndex];
+            const randomSize = getRandomSize();
+            const randomColor = getRandomColor();
+            const wordElement = document.getElementById('word');
+            wordElement.innerText = randomWord;
+            wordElement.style.fontSize = randomSize;
+            wordElement.style.color = randomColor;
+            currentIndex++;
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function getRandomSize() {
+            const minSize = 50; // 最小字體大小
+            const maxSize = 150; // 最大字體大小
+            return Math.floor(Math.random() * (maxSize - minSize + 1)) + minSize + 'px';
+        }
+
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Generate the first word when the page loads
+        generateWord();
+    </script>
+</body>
+</html>
